@@ -5,6 +5,7 @@ const {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } = require('react-native');
 import {useNavigation} from '@react-navigation/native';
 import styles from './style';
@@ -13,6 +14,10 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Error from 'react-native-vector-icons/MaterialIcons';
 import {useState} from 'react';
+import axios from 'axios';
+
+
+
 
 function RegisterPage({props}) {
   const [name, setName] = useState('');
@@ -24,6 +29,38 @@ function RegisterPage({props}) {
   const [password, setPassword] = useState('');
   const [passwordVerify, setPasswordVerify] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigation = useNavigation();
+
+
+  function handleSubmit() {
+    const userData = {
+      name: name,
+      email,
+      mobile,
+      password,
+    };
+
+    if (nameVerify && emailVerify && passwordVerify && mobileVerify) {
+      axios
+      .post("http://192.168.1.70:5001/register", userData)
+      .then(res => {console.log (res.data)
+        if(res.data.status == "ok") {
+          Alert.alert('Registered Successfully.');
+
+          navigation.navigate('Login');
+        }
+        else {
+          Alert.alert(JSON.stringify(res.data));
+        }
+      })
+      .catch(e => console.log(e));
+    }
+    else{
+      Alert.alert("Fill the details mandatorily.")
+    }
+  }
+
 
   function handleName(e) {
     const nameVar = e.nativeEvent.text;
@@ -194,7 +231,7 @@ function RegisterPage({props}) {
           )}
         </View>
         <View style={styles.button}>
-          <TouchableOpacity style={styles.inBut}>
+          <TouchableOpacity style={styles.inBut} onPress={() => handleSubmit()}>
             <View>
               <Text style={styles.textSign}>Register</Text>
             </View>
