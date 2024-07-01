@@ -161,10 +161,8 @@ import {
   
   });
   export default HomeScreen;
- */
 
-
-
+*/
 import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
@@ -237,6 +235,7 @@ const options = [
 
 function HomeScreen(props) {
   const navigation = useNavigation();
+  console.log(props);
   const [userData, setUserData] = useState('');
 
   const [origin, setOrigin] = useState(options[0].value);
@@ -255,6 +254,7 @@ function HomeScreen(props) {
       });
   }
 
+   //alert box whn clicking back button
   const handleBackPress = () => {
     Alert.alert('Exit App', 'Are you sure you want to exit?', [
       {
@@ -429,6 +429,35 @@ function HomeScreen(props) {
 }
 
 const styles = StyleSheet.create({
+ 
+  editIcon: {
+    zIndex: 1,
+    color: 'white',
+    position: 'absolute',
+    right: 2,
+    margin: 15,
+  },
+  backIcon: {
+    zIndex: 1,
+    color: 'white',
+    position: 'absolute',
+    left: 2,
+    margin: 15,
+  },
+  avatar: {
+    borderRadius:100,
+    marginTop: -170,
+    // marginLeft: 105,
+    backgroundColor: 'white',
+    height: 100,
+    width: 100,
+    padding: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    elevation: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   container: {
     padding: 20,
     marginLeft: 10,
@@ -454,19 +483,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: 'purple',
   },
-  backIcon: {
-    position: 'absolute',
-    top: 60,
-    left: 30,
-  },
-  editIcon: {
-    position: 'absolute',
-    top: 60,
-    right: 30,
-  },
-  avatar: {
-    marginTop: -170,
-  },
+  
 });
 
 export default HomeScreen;
